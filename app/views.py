@@ -18,6 +18,11 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+def profile(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request, 'profile.html', {'user': request.user})
+
 class CustomLoginView(LoginView):
     template_name = 'login.html'
 
