@@ -7,8 +7,7 @@
 
 /* Navbar links */
 #navbar a {
-  float: center;
-  text-align: center;
+  float: right;
   padding: 14px;
   text-decoration: none;
 }

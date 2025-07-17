@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-4(7+qah%v(+f+c$m9uy3vgj#t6uhzym^mu!nr%y(b=fm3e#%c6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'SSA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'app/templates/app')],
+        'DIRS': [os.path.join(BASE_DIR, 'app/templates/app'), 'templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,6 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     f'{BASE_DIR}/app/static',
 ]
