@@ -1,0 +1,26 @@
+<head>
+    <meta charset="utf-8">
+    <title>CodeCrewXL-2025</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}"> 
+<div id="navbar">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+                {% if user.is_staff %}
+                <a class="button" href="/admin">Admin Site</a>
+                {% endif %}
+            </form>
+        {% else %}
+            <a class="button" href="{% url 'login' %}">Login</a>
+            <a class="button" href="{% url 'register' %}">Register</a>
+        {% endif %}
+        <a class="button" href="{% url 'index' %}">Home</a>      
+    </div>
+    <hr>
+</head>
+    {% block page_title %}{% endblock page_title %}
+    {% block page_content %}{% endblock page_content %}
+    {% block footer %}{% endblock footer %}
