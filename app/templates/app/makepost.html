@@ -1,8 +1,12 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+<head>    
+    <meta charset="utf-8">
+    <title>{% block page_title %}Athletic Mindset{% endblock page_title %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-{% block page_title %}
-{% endblock page_title %}
 
 {% block page_content %}
 <body>
