@@ -2,13 +2,13 @@
 
 ## Features in Progress
 
-- [ ] Post Submission  
+- [x] Post Submission  
     Enable users to create and send new posts.
 
-- [ ] Image Upload  
+- [x] Image Upload  
     Allow users to upload images with their posts.
 
-- [ ] Comments  
+- [x] Comments  
     Add functionality for users to comment on posts.
 
 ## Notes
@@ -19,7 +19,7 @@
 
 ## Debug
 
-- [x] Home Page Buttons
+- [ ] Home Page Buttons
     fix the buttons on the home page to be inline with the logout button
 
 ## Posts and Comments Tut
