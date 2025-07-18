@@ -2,11 +2,11 @@
 
 ## Features in Progress
 
-- [ ] Image Upload  
-    Allow users to upload images with their posts.
-
 - [ ] Post Submission  
     Enable users to create and send new posts.
+
+- [ ] Image Upload  
+    Allow users to upload images with their posts.
 
 - [ ] Comments  
     Add functionality for users to comment on posts.
@@ -16,6 +16,11 @@
 - Prioritize image upload before enabling post submission.
 - Comments should support basic markdown formatting.
 - Review security for file uploads.
+
+## Debug
+
+- [ ] Home Page Buttons
+    fix the buttons on the home page to be inline with the logout button
 
 ## Posts and Comments Tut
 
