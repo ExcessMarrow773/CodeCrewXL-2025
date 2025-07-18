@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from app.models import Post, Comment
+from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
+from app.forms import CommentForm
 
 # Create your views here.
 
@@ -43,12 +45,26 @@ from django.shortcuts import get_object_or_404
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    form = CommentForm()
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return redirect('login')
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = Comment(
+                author=request.user,
+                body=form.cleaned_data["body"],
+                post=post,
+            )
+            comment.save()
+            return HttpResponseRedirect(request.path_info)
+
     comments = Comment.objects.filter(post=post)
     context = {
         "post": post,
         "comments": comments,
+        "form": CommentForm(),
     }
-
     return render(request, "app/detail.html", context)
 
 class CustomLoginView(LoginView):

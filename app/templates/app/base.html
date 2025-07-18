@@ -4,23 +4,33 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <div id="navbar">
+    {% block navbar %}
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
+                {% if request.path == '/profile/' %}
                 <button type="submit">Logout</button>
+                
+            {% endif %}
             </form>
             {% if user.is_staff %}
             <a class="button" href="/admin">Admin Site</a>
+
             {% endif %}
             <a class="button" href="{% url 'profile' %}">Profile</a>
+
         {% else %}
             <form method="get" action="{% url 'login' %}">
                 <button type="submit">login</button>
             </form>
+
             <a class="button" href="{% url 'register' %}">Register</a>
+
         {% endif %}
+
         <a class="button" href="{% url 'index' %}">Home</a> 
     </div>
+    {% endblock navbar %}
 </head>
 
 {% block page_content %}
