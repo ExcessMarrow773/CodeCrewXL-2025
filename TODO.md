@@ -19,7 +19,7 @@
 
 ## Debug
 
-- [ ] Home Page Buttons
+- [x] Home Page Buttons
     fix the buttons on the home page to be inline with the logout button
 
 ## Posts and Comments Tut
