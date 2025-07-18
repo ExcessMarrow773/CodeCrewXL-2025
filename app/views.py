@@ -27,7 +27,11 @@ def register(request):
 def profile(request):
     if not request.user.is_authenticated:
         return redirect('login')
-    return render(request, 'profile.html', {'user': request.user})
+    context = {
+        'user': request.user,
+        'posts': Post.objects.filter(author=request.user.username).order_by('-created_on')
+    }
+    return render(request, 'profile.html', context)
 
 # Post things
 
@@ -86,6 +90,15 @@ def makepost(request):
         form = CreatePost()
     
     return render(request, 'app/makepost.html', {'form': form})
+
+def journal(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    context = {
+        'user': request.user,
+        'posts': Post.objects.filter(author=request.user.username).order_by('-created_on')
+    }
+    return render(request, 'journal.html', context)
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
