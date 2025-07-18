@@ -12,6 +12,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path("post/<int:pk>/", views.post_detail, name="post_detail"),
     path("category/<category>/", views.category, name="category"),
-    path("create_post/", views.create_post, name="create_post"),
-    path("create_category/", views.create_category, name="create_category"),
+    path("create_post/", views.makepost, name="create_post"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

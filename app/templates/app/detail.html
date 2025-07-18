@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    <h2>{{ post.title }}</h2>
+Post: {{ post.title }}
 {% endblock page_title %}
 
 {% block page_content %}
@@ -14,12 +14,12 @@
         {% endfor %}
     </small>
     <p>{{ post.body | linebreaks }}</p>
+    <div>
+        <image src="{% static 'post.image.url' %}"></image>
+    </div>
     <h3>Leave a comment:</h3>
     <form method="post">
         {% csrf_token %}
-        <div>
-            {{ form.author }}
-        </div>
         <div>
             {{ form.body }}
         </div>

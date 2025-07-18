@@ -592,7 +592,7 @@ div {
   float: right;
 }
 
-div,
-post {
+div
+#post {
   border-bottom: var(--accent-bg) 5px solid;
 }

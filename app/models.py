@@ -10,8 +10,9 @@ class Category(models.Model):
         return self.name
     
 class Post(models.Model):
+    author = models.CharField(max_length=100, default='admin')
     title = models.CharField(max_length=255)
-    header_image = models.ImageField(null=True, blank=True, upload_to="media/")
+    image = models.ImageField(null=True, blank=True, upload_to="media/")
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
