@@ -52,10 +52,7 @@ def post_detail(request, pk):
         if form.is_valid():
             comment = Comment(
                 author=request.user.username,
-                title=form.cleaned_data["title"],   
-                    # Allow empty title
-                image=form.cleaned_data["image"],
-                    
+                body=form.cleaned_data["body"],
                 post=post
             )
             comment.save()
