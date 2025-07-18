@@ -585,6 +585,5 @@ div {
 #navbar a {
   padding: 0.2rem 0.3rem;
   text-decoration: none;
-  float: right;
-  
+  float: right center;
 }
