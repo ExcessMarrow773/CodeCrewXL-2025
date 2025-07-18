@@ -20,7 +20,9 @@ class CreatePost(forms.Form):
             attrs={"class": "form-control", "placeholder": "Body"}
         )
     )
+    # Categories are optional for posts, so 'required=False' is set explicitly.
     categories = forms.ModelMultipleChoiceField(
+        required=False,
         queryset=Category.objects.all(),
         widget=forms.CheckboxSelectMultiple(
             attrs={"class": "form-control"}
@@ -29,13 +31,13 @@ class CreatePost(forms.Form):
     image = forms.ImageField(
         required=False,
         widget=forms.FileInput(
-            attrs={"class": "form-control"}
-        )
+            attrs={
+                "class": "form-control",
+                "accept": "image/*",
+            }
+        ),
+        label="Upload Image",
     )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['image'].required = False
 
 class CreateCategory(forms.Form):
     name = forms.CharField(

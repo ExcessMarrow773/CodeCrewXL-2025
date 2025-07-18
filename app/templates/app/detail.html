@@ -6,17 +6,23 @@ Post: {{ post.title }}
 
 {% block page_content %}
     <small>
+        {% if post.categories.exists %}
         {{ post.created_on.date }} | Categories:
         {% for category in post.categories.all %}
             <a href="{% url 'category' category.name %}">
                 {{ category.name }}
             </a>
         {% endfor %}
+        {% else %}
+        {{ post.created_on.date }}
+        {% endif %}
     </small>
     <p>{{ post.body | linebreaks }}</p>
+    {% if post.image %}
     <div>
-        <image src="{% static 'post.image.url' %}"></image>
+        <img src="{{ post.image.url }}" alt="Post image">
     </div>
+    {% endif %}
     <h3>Leave a comment:</h3>
     <form method="post">
         {% csrf_token %}
