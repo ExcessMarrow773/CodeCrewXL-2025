@@ -587,3 +587,8 @@ div {
   text-decoration: none;
   float: right;
 }
+
+div,
+post {
+  border-bottom: var(--accent-bg) 5px solid;
+}
