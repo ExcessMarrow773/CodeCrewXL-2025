@@ -5,24 +5,36 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <div id="navbar">
         {% if user.is_authenticated %}
+            
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
-                <button type="submit">Logout</button>
-
+                <button id="authentication" type="submit">Logout</button>
             </form>
+            
             {% if user.is_staff %}
-            <a class="button" href="/admin">Admin Site</a>
+            
+                <a class="button" href="/admin">Admin Site</a>
+            
             {% endif %}
+
             <a class="button" href="{% url 'profile' %}">Profile</a>
+
         {% else %}
-            <a class="button" href="{% url 'login' %}">Login</a>
+
+            <form method="get" action="{% url 'login' %}">
+                <button id="authentication" type="submit">Login</button>
+            </form>
+
             <a class="button" href="{% url 'register' %}">Register</a>
         {% endif %}
+
         <a class="button" href="{% url 'index' %}">Home</a> 
     </div>
 </head>
 
 {% block page_content %}
+
 <span class="user-info">Welcome, {{ user.username }}!</span>
+
 {% endblock page_content %}
 {% block footer %}{% endblock footer %}
