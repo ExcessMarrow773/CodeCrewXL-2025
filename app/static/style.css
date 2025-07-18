@@ -95,7 +95,6 @@ a:hover {
 button,
 .button,
 a.button,
-#authentication,
 input[type="submit"],
 input[type="reset"],
 input[type="button"] {
@@ -106,7 +105,7 @@ input[type="button"] {
   padding: 0.5rem 0.5rem;
   text-align: left;
   text-decoration: none;
-  float: left;
+ 
 }
 .button[aria-disabled="true"],
 input:disabled,
@@ -587,5 +586,4 @@ div {
   padding: 0.2rem 0.3rem;
   text-decoration: none;
   float: right;
-  display: inline;
 }
