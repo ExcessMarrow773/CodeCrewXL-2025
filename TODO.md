@@ -8,7 +8,7 @@
 - [ ] Post Submission  
     Enable users to create and send new posts.
 
-- [x] Comments  
+- [X] Comments  
     Add functionality for users to comment on posts.
 
 ## Notes
