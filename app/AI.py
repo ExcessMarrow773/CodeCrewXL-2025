@@ -21,7 +21,7 @@ class AI:
         
     def sentiment_analysis(self, data):
 
-        sentiment_pipeline = pipeline("sentiment-analysis")
+        sentiment_pipeline = pipeline(model="nlptown/bert-base-multilingual-uncased-sentiment")
         data = ["I love you", "I hate you"]
         
         return sentiment_pipeline(data)
