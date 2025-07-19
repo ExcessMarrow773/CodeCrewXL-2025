@@ -5,7 +5,9 @@ class CategoryAdmin(admin.ModelAdmin):
     pass
 
 class PostAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'author', 'created_on')
+    list_filter = ('author',)
+    search_fields = ('title', 'author')
 
 class CommentAdmin(admin.ModelAdmin):
     pass

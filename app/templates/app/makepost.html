@@ -1,0 +1,35 @@
+<head>    
+    <meta charset="utf-8">
+    <title>{% block page_title %}Athletic Mindset{% endblock page_title %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+{% block page_content %}
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            {{ form.title }}
+        </div>
+        <div>
+            {{ form.body }}
+        </div>
+        <nav>
+        <div>
+            <ul class="dropdown-menu", style="height:30%; overflow:hidden; overflow-y:scroll;">
+                {{ form.categories }}
+              </ul>
+        </div>
+        </nav>
+        <div>
+            {{ form.image }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{% url 'index' %}">Cancel</a>
+    </form>
+</body>
+{% endblock page_content %}
