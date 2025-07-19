@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+AI Journal Entry
+{% endblock page_title %}
+
+{% block page_content %}
+<h2>{{ journal.author }}'s Journal Entry</h2>
+<p><strong>Date:</strong> {{ journal.created_on|date:"Y-m-d" }}</p>
+<p><strong>Entry:</strong></p>
+<p>{{ journal.entry }}</p>
+
+{% if journal.response %}
+    <h3>AI Response</h3>
+    <p>{{ journal.response }}</p>
+{% else %}
+    <p>No AI response available.</p>
+{% endif %}
+<a href="{% url 'index' %}" class="btn btn-secondary">Back to Home</a>
+{% endblock page_content %}

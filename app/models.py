@@ -47,7 +47,7 @@ class Journal(models.Model):
         return f"{self.author}'s Journal Entry on {self.created_on.strftime('%Y-%m-%d')}"
 
     def get_absolute_url(self):
-        return reverse("Journals", kwargs={"pk": self.pk})
+        return reverse("journal_detail", kwargs={"pk": self.pk})
 
     
 class UserProfile(models.Model):

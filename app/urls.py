@@ -15,5 +15,6 @@ urlpatterns = [
     path("category/<category>/", views.category, name="category"),
     path("create_post/", views.makepost, name="create_post"),
     path("write_journal/", views.write_journal, name="write_journal"),
+    path("journals/", views.journals, name="journals"),
     path("journal/<int:pk>/", views.journal_detail, name="journal_detail"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

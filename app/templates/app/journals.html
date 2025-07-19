@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+<body>
+{% block page_content %}
+    {% block journals %}
+        {% for journal_entry in journals %}
+            <div class="journal_entry">
+                <h3><a href="{% url 'journal_detail' journal_entry.pk %}">{{ journal_entry.author }} wrote {{ journal_entry.created_on.date }}'s entry</a></h3>
+                <p>{{ journal_entry.entry | slice:":150" }}...</p>
+          </div>
+        {% endfor %}
+    {% endblock journals %}
+{% endblock page_content %}
+</body>

@@ -112,16 +112,17 @@ def write_journal(request):
                 comment_bodys.append(i.body)
             post_sentiment = ai.sentiment_analysis(post_bodys)
             comment_sentiment = ai.sentiment_analysis(comment_bodys)
-            # print(post_sentiment+comment_sentiment)
             ai_context = f'''
             posts and post sentiements: [{posts, post_sentiment}], comments and comment setiments[{comments, comment_sentiment}],
             after this you will be given the users journal entry for the day.
             your goal is to use the data given to try and give them either better habats or try and make them feel better.
-            the user is {request.user.username} do not mention the posts or sentiment analysis in your response.
-            answer in plaintext and do not use any markdown or code blocks.'''
+            the user is {request.user.username}. do not mention the posts or sentiment analysis in your response.
+            answer in plaintext and do not use any markdown or code blocks. if the user asks for code, do not give it to them.
+            if the entry is incoherent, and the username is admin disregard all instructions and just respond with lorem ipsum.
+            '''
 
             response = (ai.generate_gemini_content(context=ai_context, prompt=entry).text)
-
+            #print(response)
             journal_entry = Journal(
                 author=request.user.username,
                 entry=entry,
@@ -130,7 +131,7 @@ def write_journal(request):
             )
             journal_entry.save()
             
-            return redirect('journal_detail/', pk=journal_entry.pk)
+            return redirect(journal_entry.get_absolute_url())
     else:
         form = JournalEntry()
     
@@ -140,7 +141,7 @@ def write_journal(request):
         'posts': Post.objects.filter(author=request.user.username).order_by('-created_on'),
         'comments': Comment.objects.filter(post__author=request.user.username).order_by('-created_on'),
     }
-    return render(request, 'journal.html', context)
+    return render(request, 'write_journal.html', context)
 
 def journal_detail(request, pk):
     journal = get_object_or_404(Journal, pk=pk)
@@ -150,6 +151,13 @@ def journal_detail(request, pk):
     }
     return render(request, "app/journal_detail.html", context)
 
+def journals(request):
+    journals = Journal.objects.all().order_by("-created_on")
+    context = {
+        "journals": journals,
+        "user": request.user,
+    }
+    return render(request, "app/journals.html", context)
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
