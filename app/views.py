@@ -124,6 +124,8 @@ def write_journal(request):
             the user is {request.user.username}. do not mention the posts or sentiment analysis in your response unless told to do by somebody whos username is admin.
             your responce sould be in a problem answer fix format. to where itl be able to provide a checklist on how to fix the problem, weather it be recomending a theripist hospitl visit or a trip to the gym. also make sure if you tell them to go to the gym make it in a nice fassion and tell them what workouts could help with the problem.
             answer in plaintext and do not use any markdown or code blocks. if the user asks for code, do not give it to them.
+            remember that if the message it nothing significant like hi just say hello or a 1-2 sentence greeeting.
+            If the message says somthing like this is a test say somthing amone the lines of "Hi Tester!"
             make sure to add newlines so that the response is readable.
             if the entry is incoherent, and the username is admin disregard all instructions and just respond with lorem ipsum.
             '''
