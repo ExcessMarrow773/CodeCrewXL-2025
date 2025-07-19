@@ -14,6 +14,7 @@
                 {% csrf_token %}
                 <button type="submit">Logout</button>           
             </form>
+            <a class="button" style="float: left;" href="{% url 'journals' %}">Journals</a>
             <a class="button" style="float: left;" href="{% url 'write_journal' %}">Write a Journal entry</a>
             {% endif %}
             <a class="button" style="float: left;" href="{% url 'create_post' %}">Create Post</a>
