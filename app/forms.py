@@ -1,5 +1,8 @@
 from django import forms
-from .models import Category 
+from .models import Category, Post
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class CommentForm(forms.Form):
     body = forms.CharField(
@@ -20,7 +23,13 @@ class CreatePost(forms.Form):
             attrs={"class": "form-control", "placeholder": "Body"}
         )
     )
-    # Categories are optional for posts, so 'required=False' is set explicitly.
+    is_private = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={"class": "form-check-input"}
+        ),
+        label="Make this a journal entry (private post)"
+    )
     categories = forms.ModelMultipleChoiceField(
         required=False,
         queryset=Category.objects.all(),
@@ -45,3 +54,12 @@ class CreateCategory(forms.Form):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "New Category"})
         )
+    
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+

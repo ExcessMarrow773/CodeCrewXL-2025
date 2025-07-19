@@ -3,6 +3,7 @@ from app.models import Post, Comment
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
+
 from app.forms import CommentForm, CreatePost
 
 # Create your views here.
@@ -105,3 +106,31 @@ class CustomLoginView(LoginView):
 
 class CustomLogoutView(LogoutView):
     template_name = 'index.html'
+    
+from django.shortcuts import render
+
+def ai_page(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    context = {
+        'user': request.user,
+        'posts': Post.objects.filter(author=request.user.username).order_by('-created_on')
+        }
+    return render(request, 'ai_page.html', context)
+
+def home(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    form = form.post_form(request.POST or None)
+    posts = form.post_model.objects.all()
+    if form.is_valid():
+        posts = form.post_model.objects.all().values('is_private')
+
+        for post in posts:
+          if post['is_private']:
+              posts = posts.exclude(is_private=False)
+          else:
+              posts = posts.exclude(is_private=True)
+    else:
+        form = form.post_form()
+    return render(request, 'main/home.html', {'posts': posts, 'form': form})
