@@ -23,6 +23,7 @@ Post: {{ post.title }}
         <img src="{{ post.image.url }}" alt="Post image">
     </div>
     {% endif %}
+{% if user.is_authenticated and not post.is_private %}
     <h3>Leave a comment:</h3>
     <form method="post">
         {% csrf_token %}
@@ -31,7 +32,7 @@ Post: {{ post.title }}
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
+{% if comments %}
     <h3>Comments:</h3>
     {% for comment in comments %}
         <p>
@@ -41,4 +42,6 @@ Post: {{ post.title }}
             {{ comment.body | linebreaks }}
         </p>
     {% endfor %}
+{% endif %}
+{% endif %}
 {% endblock page_content %}
