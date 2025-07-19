@@ -2,15 +2,6 @@
 
 ## Features in Progress
 
-- [x] Post Submission  
-    Enable users to create and send new posts.
-
-- [x] Image Upload  
-    Allow users to upload images with their posts.
-
-- [x] Comments  
-    Add functionality for users to comment on posts.
-
 ## Notes
 
 - Prioritize image upload before enabling post submission.

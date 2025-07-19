@@ -3,6 +3,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -14,4 +16,5 @@ urlpatterns = [
     path("category/<category>/", views.category, name="category"),
     path("create_post/", views.makepost, name="create_post"),
     path("journal/", views.journal, name="journal"),
+    path('ai/', views.ai_page, name='ai_page'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
