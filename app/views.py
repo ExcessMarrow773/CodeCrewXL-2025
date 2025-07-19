@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from app.models import Post, Comment
+from app.models import Post, Comment, Journal
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
-from app.forms import CommentForm, CreatePost
+from app.forms import CommentForm, CreatePost, JournalEntry
 from app.AI import AI
 
 # Create your views here.
@@ -82,7 +82,7 @@ def makepost(request):
                 author=request.user.username,
                 title=form.cleaned_data["title"],
                 body=form.cleaned_data["body"],
-                image=form.cleaned_data["image"]
+                image=form.cleaned_data["image"],
             )
             post.save()
             post.categories.set(form.cleaned_data["categories"])
@@ -93,20 +93,62 @@ def makepost(request):
     
     return render(request, 'app/makepost.html', {'form': form})
 
-def journal(request):
+def write_journal(request):
     if not request.user.is_authenticated:
         return redirect('login')
-        
+    
+    if request.method == "POST":
+        form = JournalEntry(request.POST)
+        if form.is_valid():
+            entry = form.cleaned_data["entry"]
+            ai = AI()
+            posts = Post.objects.filter(author=request.user.username).order_by('-created_on')
+            comments = Comment.objects.filter(post__author=request.user.username).order_by('-created_on')
+            post_bodys = []
+            for i in posts:
+                post_bodys.append(i.body)
+            comment_bodys = []
+            for i in comments:
+                comment_bodys.append(i.body)
+            post_sentiment = ai.sentiment_analysis(post_bodys)
+            comment_sentiment = ai.sentiment_analysis(comment_bodys)
+            # print(post_sentiment+comment_sentiment)
+            ai_context = f'''
+            posts and post sentiements: [{posts, post_sentiment}], comments and comment setiments[{comments, comment_sentiment}],
+            after this you will be given the users journal entry for the day.
+            your goal is to use the data given to try and give them either better habats or try and make them feel better.
+            the user is {request.user.username} do not mention the posts or sentiment analysis in your response.
+            answer in plaintext and do not use any markdown or code blocks.'''
+
+            response = (ai.generate_gemini_content(context=ai_context, prompt=entry).text)
+
+            journal_entry = Journal(
+                author=request.user.username,
+                entry=entry,
+                user=request.user,
+                response=response
+            )
+            journal_entry.save()
+            
+            return redirect('journal_detail/', pk=journal_entry.pk)
+    else:
+        form = JournalEntry()
+    
     context = {
         'user': request.user,
+        'form': form,
         'posts': Post.objects.filter(author=request.user.username).order_by('-created_on'),
         'comments': Comment.objects.filter(post__author=request.user.username).order_by('-created_on'),
-        'ai': AI()  # Assuming AI is a class that handles AI-related tasks
-        
     }
     return render(request, 'journal.html', context)
 
-
+def journal_detail(request, pk):
+    journal = get_object_or_404(Journal, pk=pk)
+    context = {
+        'journal': journal,
+        'user': request.user,
+    }
+    return render(request, "app/journal_detail.html", context)
 
 
 class CustomLoginView(LoginView):
