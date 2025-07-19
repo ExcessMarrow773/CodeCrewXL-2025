@@ -9,13 +9,13 @@
 <div id="navbar">
     {% block navbar %}
         {% if user.is_authenticated %}
+            {% if request.path == '/profile/' %}
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
-                {% if request.path == '/profile/' %}
-                <button type="submit">Logout</button>
-                
-            {% endif %}
+                <button type="submit">Logout</button>           
             </form>
+            <a class="button" style="float: left;" href="{% url 'write_journal' %}">Write a Journal entry</a>
+            {% endif %}
             <a class="button" style="float: left;" href="{% url 'create_post' %}">Create Post</a>
 
             {% if user.is_staff %}
