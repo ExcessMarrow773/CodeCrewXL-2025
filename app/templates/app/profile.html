@@ -8,12 +8,15 @@
 {% if posts %}
     <ul>
         {% for post in posts %}
+            {% if not post.private %}
             <li>
                 <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a> - {{ post.created_on.date }}
             </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}
     <p>No posts available.</p>
 {% endif %}
+
 {% endblock page_content %}

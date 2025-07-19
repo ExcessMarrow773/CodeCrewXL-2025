@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from app.models import Post, Comment
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from app.forms import CommentForm, CreatePost
@@ -95,11 +96,13 @@ def makepost(request):
 def journal(request):
     if not request.user.is_authenticated:
         return redirect('login')
+        
     context = {
         'user': request.user,
         'posts': Post.objects.filter(author=request.user.username).order_by('-created_on'),
         'comments': Comment.objects.filter(post__author=request.user.username).order_by('-created_on'),
         'ai': AI()  # Assuming AI is a class that handles AI-related tasks
+        
     }
     return render(request, 'journal.html', context)
 

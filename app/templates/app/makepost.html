@@ -15,6 +15,7 @@
         {% csrf_token %}
         <div>
             {{ form.title }}
+            {{ form.as_media }}
         </div>
         <div>
             {{ form.body }}

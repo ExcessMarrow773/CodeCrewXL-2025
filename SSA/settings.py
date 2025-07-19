@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_ckeditor_5',  # CKEditor for rich text editing
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -163,5 +166,6 @@ STORAGES = {
 #EMAIL_HOST_PASSWORD = "dhtp tzep ajmm eecd"
 #SERVER_EMAIL = "spector.studio.games@gmail.com"
 #ADMINS = [
-#        ('atticus', 'excessmarrow773@gmail.com')
+#        ('atticus', 'atticus.falkner.walton@gmail.com')
+#        ('dalyn', 'mud.bld.prince@gmail.com')
 #]

@@ -21,7 +21,7 @@ class Post(models.Model):
     is_private = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return self.title + "\n" + self.description
+        return self.title + "\n" + self.body
 
 class Comment(models.Model):
     author = models.CharField(max_length=60)
@@ -36,6 +36,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     mental_health_score = models.IntegerField(name = "Mental Health Score", default=0)
-    
+
     def __str__(self):
         return self.user.username
