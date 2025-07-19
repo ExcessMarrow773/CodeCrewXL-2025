@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 class Category(models.Model):
     name = models.CharField(max_length=30)
     
@@ -30,3 +31,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.author} on '{self.post}'"
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    mental_health_score = models.IntegerField(name = "Mental Health Score", default=0)
+    
+    def __str__(self):
+        return self.user.username
