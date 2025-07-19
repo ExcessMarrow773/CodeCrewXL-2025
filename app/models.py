@@ -13,16 +13,16 @@ class Category(models.Model):
 class Post(models.Model):
     author = models.CharField(max_length=100, default='admin')
     title = models.CharField(max_length=255)
-    image = models.ImageField(null=True, blank=True, upload_to="media/")    
-    body = models.TextField()
+    image = models.ImageField(null=True, upload_to="media/")    
+    body = models.TextField(default="")
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField("Category", related_name="posts")
-    is_private = models.BooleanField(default=True)
+    is_private = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.title + "\n" + self.body
-
+    
 class Comment(models.Model):
     author = models.CharField(max_length=60)
     body = models.TextField()

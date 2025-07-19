@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from timer import timer
 
 
+
 class AI:
     def __init__(self):
         load_dotenv()
@@ -23,7 +24,7 @@ class AI:
     @timer('sentiment_analysis', 'ms')
     def sentiment_analysis(self, data):
 
-        sentiment_pipeline = pipeline(model="nlptown/bert-base-multilingual-uncased-sentiment")
+        sentiment_pipeline = pipeline(modzael="nlptown/bert-base-multilingual-uncased-sentiment")
         data = ["I love you", "I hate you"]
         
         return sentiment_pipeline(data)
@@ -41,3 +42,29 @@ if __name__ == "__main__":
         prompt = "Hi AI''"
         print(ai.generate_gemini_content(context, prompt).text)
 
+from django.shortcuts import render
+from app.models import Post
+from app.AI import AI
+
+def ai(request):
+    ai_response = ""
+    user_prompt = ""
+    formatted_posts = ""
+    if request.user.is_authenticated:
+        # Only get posts by the current user
+        posts = Post.objects.filter(author=request.user.username)
+        for post in posts:
+            formatted_posts += f'Title:"{post.title}" Body:"{post.body}" IMG:"{post.image.url if post.image else ""}"\n'
+
+    if request.method == "POST":
+        user_prompt = request.POST.get("prompt", "")
+        # Combine user's posts and their prompt
+        full_prompt = f"{formatted_posts}\n{user_prompt}"
+        ai_instance = AI()
+        response = ai_instance.generate_gemini_content("", full_prompt)
+        ai_response = response.text
+
+    return render(request, "app/ai_page.html", {
+        "ai_response": ai_response,
+        "user_prompt": user_prompt
+    })
