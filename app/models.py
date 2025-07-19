@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
@@ -31,6 +32,23 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.author} on '{self.post}'"
+    
+class Journal(models.Model):
+    author=models.CharField(max_length=60)
+    created_on = models.DateTimeField(auto_now_add=True)
+    entry = models.TextField()
+    response = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        verbose_name = "Journal"
+        verbose_name_plural = "Journals"
+
+    def __str__(self):
+        return f"{self.author}'s Journal Entry on {self.created_on.strftime('%Y-%m-%d')}"
+
+    def get_absolute_url(self):
+        return reverse("Journals", kwargs={"pk": self.pk})
+
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
