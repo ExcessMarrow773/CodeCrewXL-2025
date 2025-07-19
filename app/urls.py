@@ -16,5 +16,4 @@ urlpatterns = [
     path("category/<category>/", views.category, name="category"),
     path("create_post/", views.makepost, name="create_post"),
     path("journal/", views.journal, name="journal"),
-    path('ai/', views.ai_page, name='ai_page'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
