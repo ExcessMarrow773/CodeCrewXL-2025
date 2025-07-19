@@ -10,7 +10,6 @@ AI Journal
 </div>
 
 <div id="content">
-    <!-- Your main page content goes here -->
 
 {% block page_content %}
 <form method="post" enctype="multipart/form-data">
@@ -18,9 +17,8 @@ AI Journal
         <div>
             {{ form.entry }}
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="showLoader()">Submit</button>
         <a href="{% url 'index' %}">Cancel</a>
     </form>
-    
 </div>
 {% endblock page_content %}
