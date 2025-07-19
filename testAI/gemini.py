@@ -5,7 +5,7 @@ client = genai.Client(api_key="AIzaSyDRQcTgr7SEhBu7Pnykm5KE4IURvVXIOjQ")  # <-- 
 
 response = client.models.generate_content(
     model="gemini-2.5-flash",
-    contents="Explain sports mental health and how it can help athletes. ",
+    contents="",
     
 )
 print(response.text)
