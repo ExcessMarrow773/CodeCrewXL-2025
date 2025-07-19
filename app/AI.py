@@ -2,13 +2,15 @@ import os
 from google import genai
 from transformers import pipeline
 from dotenv import load_dotenv
+from timer import timer
 
 
 class AI:
     def __init__(self):
         load_dotenv()
         self.GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-    
+
+    @timer('generate_gemini_content', 'ms')
     def generate_gemini_content(self, context, prompt):
         client = genai.Client(api_key='AIzaSyDRQcTgr7SEhBu7Pnykm5KE4IURvVXIOjQ')
 
@@ -18,7 +20,7 @@ class AI:
         )
 
         return response
-        
+    @timer('sentiment_analysis', 'ms')
     def sentiment_analysis(self, data):
 
         sentiment_pipeline = pipeline(model="nlptown/bert-base-multilingual-uncased-sentiment")
@@ -28,7 +30,7 @@ class AI:
     
     
 if __name__ == "__main__":
-    ai_version = False 
+    ai_version = True 
     if ai_version == False:
         ai = AI()
         data = ["I love you", "I hate you"]
@@ -37,5 +39,5 @@ if __name__ == "__main__":
         ai = AI()
         context = ""
         prompt = "Hi AI''"
-        print(ai.generate_gemini_content(context, prompt))
+        print(ai.generate_gemini_content(context, prompt).text)
 
