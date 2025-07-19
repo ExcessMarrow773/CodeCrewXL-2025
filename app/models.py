@@ -52,8 +52,13 @@ class Journal(models.Model):
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-    mental_health_score = models.IntegerField(name = "Mental Health Score", default=0)
 
+    mental_health_score = models.IntegerField(name = "Mental Health Score", default=0)
+    grade = models.CharField(max_length=20, choices=[
+        ('None', 'None'),
+        ('Middle School', 'Middle School'),
+        ('High School', 'High School'),
+        ('College', 'College')
+    ], default='None')
     def __str__(self):
         return self.user.username

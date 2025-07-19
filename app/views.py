@@ -104,20 +104,27 @@ def write_journal(request):
             ai = AI()
             posts = Post.objects.filter(author=request.user.username).order_by('-created_on')
             comments = Comment.objects.filter(post__author=request.user.username).order_by('-created_on')
+            journals = Journal.objects.filter(user=request.user).order_by('-created_on')
             post_bodys = []
             for i in posts:
                 post_bodys.append(i.body)
             comment_bodys = []
             for i in comments:
                 comment_bodys.append(i.body)
+            journal_bodys = []
+            for i in journals:
+                journal_bodys.append(i.entry)
             post_sentiment = ai.sentiment_analysis(post_bodys)
             comment_sentiment = ai.sentiment_analysis(comment_bodys)
+            journal_sentiment = ai.sentiment_analysis(journal_bodys)
             ai_context = f'''
             posts and post sentiements: [{posts, post_sentiment}], comments and comment setiments[{comments, comment_sentiment}],
             after this you will be given the users journal entry for the day.
-            your goal is to use the data given to try and give them either better habats or try and make them feel better.
-            the user is {request.user.username}. do not mention the posts or sentiment analysis in your response.
+            your goal is to use the data given to try and give them either better habats or try and make them feel better. 
+            the user is {request.user.username}. do not mention the posts or sentiment analysis in your response unless told to do by somebody whos username is admin.
+            your responce sould be in a problem answer fix format. to where itl be able to provide a checklist on how to fix the problem, weather it be recomending a theripist hospitl visit or a trip to the gym. also make sure if you tell them to go to the gym make it in a nice fassion and tell them what workouts could help with the problem.
             answer in plaintext and do not use any markdown or code blocks. if the user asks for code, do not give it to them.
+            make sure to add newlines so that the response is readable.
             if the entry is incoherent, and the username is admin disregard all instructions and just respond with lorem ipsum.
             '''
 

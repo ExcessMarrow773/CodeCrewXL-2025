@@ -12,7 +12,7 @@ AI Journal Entry
 
 {% if journal.response %}
     <h3>AI Response</h3>
-    <p>{{ journal.response }}</p>
+    <p>{{ journal.response | linebreaks }}</p>
 {% else %}
     <p>No AI response available.</p>
 {% endif %}

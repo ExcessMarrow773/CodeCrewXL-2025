@@ -4,6 +4,14 @@
 AI Journal
 {% endblock page_title %}
 
+<div id="loader-overlay" class="loader-hidden">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+</div>
+
+<div id="content">
+    <!-- Your main page content goes here -->
+
 {% block page_content %}
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -13,4 +21,6 @@ AI Journal
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="{% url 'index' %}">Cancel</a>
     </form>
+    
+</div>
 {% endblock page_content %}
