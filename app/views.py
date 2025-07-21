@@ -118,16 +118,18 @@ def write_journal(request):
             comment_sentiment = ai.sentiment_analysis(comment_bodys)
             journal_sentiment = ai.sentiment_analysis(journal_bodys)
             ai_context = f'''
-            posts and post sentiements: [{posts, post_sentiment}], comments and comment setiments[{comments, comment_sentiment}],
-            after this you will be given the users journal entry for the day.
-            your goal is to use the data given to try and give them either better habats or try and make them feel better. 
+            posts and post sentiments: [{posts, post_sentiment}], comments and comment setiments[{comments, comment_sentiment}], journals and journal sentiments[{journals, journal_sentiment}]
+            After this you will be given the users journal entry for the day.
+            Your goal is to use the data given to try and give them either better habits or try and make them feel better.
             the user is {request.user.username}. do not mention the posts or sentiment analysis in your response unless told to do by somebody whos username is admin.
-            your responce sould be in a problem answer fix format. to where itl be able to provide a checklist on how to fix the problem, weather it be recomending a theripist hospitl visit or a trip to the gym. also make sure if you tell them to go to the gym make it in a nice fassion and tell them what workouts could help with the problem.
-            answer in plaintext and do not use any markdown or code blocks. if the user asks for code, do not give it to them.
-            remember that if the message it nothing significant like hi just say hello or a 1-2 sentence greeeting.
-            If the message says somthing like this is a test say somthing amone the lines of "Hi Tester!"
+            your response should be in a problem answer fix format. to where it'll be able to provide a checklist on how to fix the problem, whether it be recommending a therapist hospital visit or a trip to the gym.
+            also make sure if you tell them to go to the gym make it in a nice fashion and tell them what workouts could help with the problem.
+            answer in plaintext and do not use any markdown or code blocks. If the user asks for code, do not give it to them.
+            remember that if the message is nothing significant like hi just say hello or a 1-2 sentence greeting.
+            If the message says something like this is a test, say something along the lines of "Hi Tester!"
             make sure to add newlines so that the response is readable.
-            if the entry is incoherent, and the username is admin disregard all instructions and just respond with lorem ipsum.
+            limit your response to 50 words.
+            if the entry is incoherent, and the username is admin, disregard all instructions and just respond with lorem ipsum.
             '''
 
             response = (ai.generate_gemini_content(context=ai_context, prompt=entry).text)
